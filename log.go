@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+var LOGLEVEL int
+
 func log(level string, formating string, args ...interface{}) {
 	filename, line := "???", 0
 	_, filename, line, ok := runtime.Caller(2)
