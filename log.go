@@ -24,29 +24,44 @@ func log(level string, formating string, args ...interface{}) {
 
 const fatal = 0
 
-func SetLevelFatal() {
+func SetLevelFatal() (int, string) {
 	level = 0
+	return level, "Fatal"
+
 }
-func SetLevelError() {
+func SetLevelError() (int, string) {
 	level = 1
+	return level, "Error"
+
 }
-func SetLevelWarn() {
+func SetLevelWarn() (int, string) {
 	level = 2
+	return level, "Warn"
+
 }
-func SetLevelInfo() {
+func SetLevelInfo() (int, string) {
 	level = 3
+	return level, "Info"
+
 }
-func SetLevelDebug() {
+func SetLevelDebug() (int, string) {
 	level = 4
+	return level, "Debug"
+
 }
-func SetLevelDebug1() {
+func SetLevelDebug1() (int, string) {
 	level = 5
+	return level, "Debug1"
+
 }
-func SetLevelDebug2() {
+func SetLevelDebug2() (int, string) {
 	level = 6
+	return level, "Debug2"
+
 }
-func SetLevelDebug3() {
+func SetLevelDebug3() (int, string) {
 	level = 7
+	return level, "Debug3"
 }
 func GetLevel() (int, string) {
 	var str string = "Info"
