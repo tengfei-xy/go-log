@@ -8,8 +8,11 @@ import (
 	"time"
 )
 
-var LOGLEVEL int
+var level int
 
+func init() {
+	SetLevelInfo()
+}
 func log(level string, formating string, args ...interface{}) {
 	filename, line := "???", 0
 	_, filename, line, ok := runtime.Caller(2)
@@ -17,59 +20,116 @@ func log(level string, formating string, args ...interface{}) {
 		filename = filepath.Base(filename)
 	}
 	fmt.Printf("%s %s %s:%d %s\n", level, time.Now().Format("2006-01-02 15:04:05"), filename, line, fmt.Sprintf(formating, args...))
-
 }
 
-func Debugf(formating string, args ...interface{}) {
-	if LOGLEVEL <= 0 {
-		log("D", formating, args...)
-	}
-}
-func Debug(formating interface{}) {
-	if LOGLEVEL <= 0 {
-		log("D", fmt.Sprintf("%v", formating))
-	}
-}
-func Infof(formating string, args ...interface{}) {
-	if LOGLEVEL <= 1 {
-		log("I", formating, args...)
-	}
-}
-func Info(formating interface{}) {
-	if LOGLEVEL <= 1 {
-		log("I", fmt.Sprintf("%v", formating))
-	}
-}
-func Warnf(formating string, args ...interface{}) {
-	if LOGLEVEL <= 2 {
-		log("W", formating, args...)
-	}
-}
-func Warn(formating interface{}) {
-	if LOGLEVEL <= 2 {
-		log("W", fmt.Sprintf("%v", formating))
-	}
-}
+const fatal = 0
 
-func Errorf(formating string, args ...interface{}) {
-	if LOGLEVEL <= 3 {
-		log("E", formating, args...)
-	}
+func SetLevelFatal() {
+	level = 0
 }
-func Error(formating interface{}) {
-	if LOGLEVEL <= 3 {
-		log("E", fmt.Sprintf("%v", formating))
-	}
+func SetLevelError() {
+	level = 1
+}
+func SetLevelWarn() {
+	level = 2
+}
+func SetLevelInfo() {
+	level = 3
+}
+func SetLevelDebug() {
+	level = 4
+}
+func SetLevelDebug1() {
+	level = 5
+}
+func SetLevelDebug2() {
+	level = 6
+}
+func SetLevelDebug3() {
+	level = 7
 }
 func Fatalf(formating string, args ...interface{}) {
-	if LOGLEVEL <= 4 {
+	if level <= 0 {
 		log("F", formating, args...)
 		os.Exit(125)
 	}
 }
+
 func Fatal(formating interface{}) {
-	if LOGLEVEL <= 4 {
+	if level <= 0 {
 		log("F", fmt.Sprintf("%v", formating))
 		os.Exit(125)
+	}
+}
+
+func Errorf(formating string, args ...interface{}) {
+	if level <= 1 {
+		log("E", formating, args...)
+	}
+}
+func Error(formating interface{}) {
+	if level <= 1 {
+		log("E", fmt.Sprintf("%v", formating))
+	}
+}
+func Warnf(formating string, args ...interface{}) {
+	if level <= 2 {
+		log("W", formating, args...)
+	}
+}
+func Warn(formating interface{}) {
+	if level <= 2 {
+		log("W", fmt.Sprintf("%v", formating))
+	}
+}
+func Infof(formating string, args ...interface{}) {
+	if level <= 3 {
+		log("I", formating, args...)
+	}
+}
+func Info(formating interface{}) {
+	if level <= 3 {
+		log("I", fmt.Sprintf("%v", formating))
+	}
+}
+
+func Debugf(formating string, args ...interface{}) {
+	if level <= 4 {
+		log("D", formating, args...)
+	}
+}
+func Debug(formating interface{}) {
+	if level <= 4 {
+		log("D", fmt.Sprintf("%v", formating))
+	}
+}
+func Debug1f(formating string, args ...interface{}) {
+	if level <= 5 {
+		log("D", formating, args...)
+	}
+}
+func Debug1(formating interface{}) {
+	if level <= 5 {
+		log("D", fmt.Sprintf("%v", formating))
+	}
+}
+func Debug2f(formating string, args ...interface{}) {
+	if level <= 6 {
+		log("D", formating, args...)
+	}
+}
+func Debug2(formating interface{}) {
+	if level <= 6 {
+		log("D", fmt.Sprintf("%v", formating))
+	}
+}
+func Debug3f(formating string, args ...interface{}) {
+	if level <= 7 {
+		log("D", formating, args...)
+	}
+}
+func Debug3(formating interface{}) {
+	if level <= 7 {
+		log("D", fmt.Sprintf("%v", formating))
 	}
 }
