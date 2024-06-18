@@ -149,6 +149,12 @@ func GetLevel() (int, string) {
 	}
 	return level, str
 }
+func GetLevelAll() []string {
+	return []string{LEVELFATAL, LEVELERROR, LEVELWARN, LEVELINFO, LEVELDEBUG, LEVELDEBUG1, LEVELDEBUG2, LEVELDEBUG3}
+}
+func GetLevelIntAll() []int {
+	return []int{LEVELFATALINT, LEVELERRORINT, LEVELWARNINT, LEVELINFOINT, LEVELDEBUGINT, LEVELDEBUG1INT, LEVELDEBUG2INT, LEVELDEBUG3INT}
+}
 func Fatalf(formating string, args ...interface{}) {
 	if level >= LEVELFATALINT {
 		log("F", formating, args...)
