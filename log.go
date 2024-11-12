@@ -15,12 +15,26 @@ func init() {
 	SetLevelInfo()
 }
 func log(level string, formating string, args ...interface{}) {
-	filename, line := "???", 0
-	_, filename, line, ok := runtime.Caller(2)
+	filename, line, pkgName := "???", 0, "???"
+	pc, filename, line, ok := runtime.Caller(2)
 	if ok {
 		filename = filepath.Base(filename)
+		fn := runtime.FuncForPC(pc).Name()
+		pkgName = fn
+		if lastSlash := lastIndexByte(pkgName, '/'); lastSlash >= 0 {
+			pkgName = pkgName[:lastSlash]
+		}
 	}
-	fmt.Printf("%s %s %s:%d %s\n", level, time.Now().Format("2006-01-02 15:04:05"), filename, line, fmt.Sprintf(formating, args...))
+	fmt.Printf("%s %s %s.%s:%d  %s\n", level, time.Now().Format("2006-01-02 15:04:05"), pkgName, filename, line, fmt.Sprintf(formating, args...))
+}
+
+func lastIndexByte(s string, c byte) int {
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == c {
+			return i
+		}
+	}
+	return -1
 }
 
 const LEVELFATAL string = "fatal"
