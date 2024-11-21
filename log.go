@@ -156,17 +156,13 @@ func GetLevelIntAll() []int {
 	return []int{LEVELFATALINT, LEVELERRORINT, LEVELWARNINT, LEVELINFOINT, LEVELDEBUGINT, LEVELDEBUG1INT, LEVELDEBUG2INT, LEVELDEBUG3INT}
 }
 func Fatalf(formating string, args ...interface{}) {
-	if level >= LEVELFATALINT {
-		log("F", formating, args...)
-		os.Exit(125)
-	}
+	log("F", formating, args...)
+	os.Exit(125)
 }
 
 func Fatal(formating interface{}) {
-	if level >= LEVELFATALINT {
-		log("F", fmt.Sprintf("%v", formating))
-		os.Exit(125)
-	}
+	log("F", fmt.Sprintf("%v", formating))
+	os.Exit(125)
 }
 
 func Errorf(formating string, args ...interface{}) {
