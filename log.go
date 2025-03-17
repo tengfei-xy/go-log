@@ -11,18 +11,6 @@ import (
 
 var level int
 
-func init() {
-	SetLevelInfo()
-}
-func log(level string, formating string, args ...interface{}) {
-	filename, line := "???", 0
-	_, filename, line, ok := runtime.Caller(2)
-	if ok {
-		filename = filepath.Join(filepath.Base(filepath.Dir(filename)), filepath.Base(filename))
-	}
-	fmt.Printf("%s %s %s:%d %s\n", level, time.Now().Format("2006-01-02 15:04:05"), filename, line, fmt.Sprintf(formating, args...))
-}
-
 const LEVELFATAL string = "fatal"
 const LEVELERROR string = "error"
 const LEVELWARN string = "warn"
@@ -40,6 +28,18 @@ const LEVELDEBUGINT int = 4
 const LEVELDEBUG1INT int = 5
 const LEVELDEBUG2INT int = 6
 const LEVELDEBUG3INT int = 7
+
+func init() {
+	SetLevelInfo()
+}
+func log(level string, formating string, args ...interface{}) {
+	filename, line := "???", 0
+	_, filename, line, ok := runtime.Caller(2)
+	if ok {
+		filename = filepath.Join(filepath.Base(filepath.Dir(filename)), filepath.Base(filename))
+	}
+	fmt.Printf("%s %s %s:%d \t%s\n", level, time.Now().Format("2006-01-02 15:04:05"), filename, line, fmt.Sprintf(formating, args...))
+}
 
 func SetLevelStr(v string) {
 	switch strings.ToLower(v) {
