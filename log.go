@@ -60,7 +60,7 @@ func SetLevelStr(v string) {
 	case LEVELDEBUG3:
 		SetLevelDebug3()
 	default:
-		SetLevelInfo()
+		SetLevelDebug3()
 	}
 }
 func SetLevelInt(v int) {
@@ -82,7 +82,7 @@ func SetLevelInt(v int) {
 	case LEVELDEBUG3INT:
 		SetLevelDebug3()
 	default:
-		SetLevelInfo()
+		SetLevelDebug3()
 	}
 }
 func SetLevelFatal() (int, string) {
@@ -155,24 +155,60 @@ func GetLevelAll() []string {
 func GetLevelIntAll() []int {
 	return []int{LEVELFATALINT, LEVELERRORINT, LEVELWARNINT, LEVELINFOINT, LEVELDEBUGINT, LEVELDEBUG1INT, LEVELDEBUG2INT, LEVELDEBUG3INT}
 }
-func Fatalf(formating string, args ...interface{}) {
-	log("F", formating, args...)
-	os.Exit(125)
-}
 
+// fatal
 func Fatal(formating interface{}) {
 	log("F", fmt.Sprintf("%v", formating))
 	os.Exit(125)
 }
+func Fatalf(formating string, args ...interface{}) {
+	log("F", formating, args...)
+	os.Exit(125)
+}
+func Fatalj(j any) {
+	log("F", jsonPrettyPrint(j))
+	os.Exit(125)
+}
+func Fatalfunc(argFunc func() interface{}) {
+	log("F", fmt.Sprintf("%v", argFunc()))
+	os.Exit(125)
+}
+func Fatalfuncf(formating string, argFunc func() interface{}) {
+	log("F", formating, argFunc())
+	os.Exit(125)
+}
 
+// error
+func Error(formating interface{}) {
+	if level >= LEVELERRORINT {
+		log("E", fmt.Sprintf("%v", formating))
+	}
+}
 func Errorf(formating string, args ...interface{}) {
 	if level >= LEVELERRORINT {
 		log("E", formating, args...)
 	}
 }
-func Error(formating interface{}) {
+func Errorj(j any) {
 	if level >= LEVELERRORINT {
-		log("E", fmt.Sprintf("%v", formating))
+		log("E", jsonPrettyPrint(j))
+	}
+}
+func Errorfunc(argFunc func() interface{}) {
+	if level >= LEVELERRORINT {
+		log("E", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Errorfuncf(formating string, argFunc func() interface{}) {
+	if level >= LEVELERRORINT {
+		log("E", formating, argFunc())
+	}
+}
+
+// warn
+func Warn(formating interface{}) {
+	if level >= LEVELWARNINT {
+		log("W", fmt.Sprintf("%v", formating))
 	}
 }
 func Warnf(formating string, args ...interface{}) {
@@ -180,9 +216,26 @@ func Warnf(formating string, args ...interface{}) {
 		log("W", formating, args...)
 	}
 }
-func Warn(formating interface{}) {
+func Warnj(j any) {
 	if level >= LEVELWARNINT {
-		log("W", fmt.Sprintf("%v", formating))
+		log("W", jsonPrettyPrint(j))
+	}
+}
+func Warnfunc(argFunc func() interface{}) {
+	if level >= LEVELWARNINT {
+		log("W", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Warnfuncf(formating string, argFunc func() interface{}) {
+	if level >= LEVELWARNINT {
+		log("W", formating, argFunc())
+	}
+}
+
+// info
+func Info(formating interface{}) {
+	if level >= LEVELINFOINT {
+		log("I", fmt.Sprintf("%v", formating))
 	}
 }
 func Infof(formating string, args ...interface{}) {
@@ -190,19 +243,52 @@ func Infof(formating string, args ...interface{}) {
 		log("I", formating, args...)
 	}
 }
-func Info(formating interface{}) {
+func Infoj(j any) {
 	if level >= LEVELINFOINT {
-		log("I", fmt.Sprintf("%v", formating))
+		log("I", jsonPrettyPrint(j))
+	}
+}
+func Infofunc(argFunc func() interface{}) {
+	if level >= LEVELINFOINT {
+		log("I", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Infofuncf(formating string, argFunc func() interface{}) {
+	if level >= LEVELINFOINT {
+		log("I", formating, argFunc())
 	}
 }
 
+// debug
+func Debug(formating interface{}) {
+	if level >= LEVELDEBUGINT {
+		log("D", fmt.Sprintf("%v", formating))
+	}
+}
 func Debugf(formating string, args ...interface{}) {
 	if level >= LEVELDEBUGINT {
 		log("D", formating, args...)
 	}
 }
-func Debug(formating interface{}) {
+func Debugj(j any) {
 	if level >= LEVELDEBUGINT {
+		log("D", jsonPrettyPrint(j))
+	}
+}
+func Debugfunc(argFunc func() interface{}) {
+	if level >= LEVELDEBUGINT {
+		log("D", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Debugfuncf(formating string, argFunc func() interface{}) {
+	if level >= LEVELDEBUGINT {
+		log("D", formating, argFunc())
+	}
+}
+
+// debug1
+func Debug1(formating interface{}) {
+	if level >= LEVELDEBUG1INT {
 		log("D", fmt.Sprintf("%v", formating))
 	}
 }
@@ -211,8 +297,25 @@ func Debug1f(formating string, args ...interface{}) {
 		log("D", formating, args...)
 	}
 }
-func Debug1(formating interface{}) {
+func Debug1j(j any) {
 	if level >= LEVELDEBUG1INT {
+		log("D", jsonPrettyPrint(j))
+	}
+}
+func Debug1func(argFunc func() interface{}) {
+	if level >= LEVELDEBUG1INT {
+		log("D", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Debug1funcf(formating string, argFunc func() interface{}) {
+	if level >= LEVELDEBUG1INT {
+		log("D", formating, argFunc())
+	}
+}
+
+// debug2
+func Debug2(formating interface{}) {
+	if level >= LEVELDEBUG2INT {
 		log("D", fmt.Sprintf("%v", formating))
 	}
 }
@@ -221,8 +324,25 @@ func Debug2f(formating string, args ...interface{}) {
 		log("D", formating, args...)
 	}
 }
-func Debug2(formating interface{}) {
+func Debug2j(j any) {
 	if level >= LEVELDEBUG2INT {
+		log("D", jsonPrettyPrint(j))
+	}
+}
+func Debug2func(argFunc func() interface{}) {
+	if level >= LEVELDEBUG2INT {
+		log("D", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Debug2funcf(formating string, argFunc func() interface{}) {
+	if level >= LEVELDEBUG2INT {
+		log("D", formating, argFunc())
+	}
+}
+
+// debug3
+func Debug3(formating interface{}) {
+	if level >= LEVELDEBUG3INT {
 		log("D", fmt.Sprintf("%v", formating))
 	}
 }
@@ -231,8 +351,18 @@ func Debug3f(formating string, args ...interface{}) {
 		log("D", formating, args...)
 	}
 }
-func Debug3(formating interface{}) {
+func Debug3j(j any) {
 	if level >= LEVELDEBUG3INT {
-		log("D", fmt.Sprintf("%v", formating))
+		log("D", jsonPrettyPrint(j))
+	}
+}
+func Debug3func(argFunc func() interface{}) {
+	if level >= LEVELDEBUG3INT {
+		log("D", fmt.Sprintf("%v", argFunc()))
+	}
+}
+func Debug3funcf(formating string, argFunc func() interface{}) {
+	if level >= LEVELDEBUG3INT {
+		log("D", formating, argFunc())
 	}
 }
